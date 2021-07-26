@@ -40,3 +40,5 @@ dfproducts = pd.DataFrame(data, index=None)
 # por fim vou arquivar em um arquico CSV
 dfproducts.to_csv('raspagem-teste01.csv')
 # Caso positivo, um CSV com o título acima sera criado no mesmo diretório.
+
+print(dfproducts)

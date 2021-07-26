@@ -3,7 +3,6 @@ OBJETIVO: Dando evolução ao objetivo do programa anterior, a intenção agora 
 as mesmas ferramentas para navegas por todas as páginas e extrair os mesmos dados.
 '''
 
-
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -16,11 +15,17 @@ def pageScraper(url, data_dicts):
     soup = BeautifulSoup(response.content, 'html.parser')
     product_grid = soup.find_all('li', attrs={"class" : "promotion-item"})
     for prod in product_grid:
+        preco_atual = prod.find('span', attrs={"class" : "promotion-item__price"})
+        reais = preco_atual.find('span').text
+        if preco_atual.find('sup') is None: 
+            centavos = '' 
+        else: 
+            centavos = ", " + preco_atual.find('sup').text
         data_dicts.append(
             {
             "nome-produto" : prod.find('p', attrs={"class" : "promotion-item__title"}).text,
             "preco-antigo" : prod.find('span', attrs={"class" : "promotion-item__oldprice"}).text,
-            "preco-atual" : prod.find('span', attrs={"class" : "promotion-item__price"}).text,
+            "preco-atual" : reais + centavos,
             "link-produto" : prod.find('a', attrs={"class" : "promotion-item__link-container"}).get('href')
             }
         )
