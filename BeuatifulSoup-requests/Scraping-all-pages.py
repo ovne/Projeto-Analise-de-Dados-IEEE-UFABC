@@ -33,9 +33,8 @@ def pageScraper(url, data_dicts):
     is_nextpage = soup.find('li', attrs={'class' : 'andes-pagination__button andes-pagination__button--next'})
     if is_nextpage:
         # 3)Enquanto achar esse seletor, obtem o URL da proxima página e repete os passos 1 e 2 por recursão.
-        url = is_nextpage.a.get('href')
+        url = is_nextpage.a.get('href') #notação de ponto para acessar a tag a
         pageScraper(url, data_dicts)
-    #print("ALL PAGES SCRAPED")
     return data_dicts
 
 
